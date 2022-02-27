@@ -9,3 +9,5 @@
 - https://developer.twitter.com/[Twitter API Credentials]
 - https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html[Install Elastic Search with Docker]
 - https://hgmauri.medium.com/configurando-o-elasticsearch-e-kibana-no-docker-3f4679eb5feb[Configurando o Elasticsearch e Kibana no Docker]
+- https://developer.twitter.com/en[Developer Twitter Account]
+- https://twitter.com/logout?redirect_after_logout=[Twitter Developer Login]

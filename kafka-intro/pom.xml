@@ -13,6 +13,7 @@
   <groupId>com.udemy.kafka.intro</groupId>
   <artifactId>kafka-intro</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+
   <name>Udemy :: Kafka Boot Camp :: Intro</name>
 
 </project>
