@@ -4,3 +4,8 @@
 == Links
 
 - https://docs.confluent.io/platform/current/quickstart/ce-docker-quickstart.html[Quick Start for Confluent Platform]
+- https://camel.apache.org/components/3.15.x/kafka-component.html[Kafka Camel Component]
+- https://sematext.com/blog/logback-tutorial/[Logback Configuration]
+- https://developer.twitter.com/[Twitter API Credentials]
+- https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html[Install Elastic Search with Docker]
+- https://hgmauri.medium.com/configurando-o-elasticsearch-e-kibana-no-docker-3f4679eb5feb[Configurando o Elasticsearch e Kibana no Docker]
