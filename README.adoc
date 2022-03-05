@@ -4,16 +4,17 @@
 
 - https://docs.confluent.io/platform/current/quickstart/ce-docker-quickstart.html[Quick Start for Confluent Platform]
 - https://camel.apache.org/components/3.15.x/kafka-component.html[Kafka Camel Component]
+- https://camel.apache.org/components/3.15.x/twitter-search-component.html[Twitter Search]
 - https://sematext.com/blog/logback-tutorial/[Logback Configuration]
 - https://developer.twitter.com/[Twitter API Credentials]
-- https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html[Install Elastic Search with Docker]
+- https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html[Install Elasticsearch with Docker]
 - https://hgmauri.medium.com/configurando-o-elasticsearch-e-kibana-no-docker-3f4679eb5feb[Configurando o Elasticsearch e Kibana no Docker]
 - https://developer.twitter.com/en[Developer Twitter Account]
 - https://twitter.com/logout?redirect_after_logout=[Twitter Developer Login]
 
-== Twitter text to be approved as consumer
+== Twitter texts to be approved on prompt
 
 ****
 I intend to use this Twitter feed to get real data streams into an application that will put data into Kafka, after that this data will end up in a ELK stack at the end and this just a POC purpose, to show how Apache Camel shines over code bloat up until languages such Python.
-This is no Commercial app and will result in any besides product deployment Twitter data will not be displayed and we will only etract tweets on low, very low terms
+This is no Commercial app and will result in any besides product deployment Twitter data will not be displayed, and we will only extract tweets on low, very low terms
 ****
