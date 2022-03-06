@@ -27,6 +27,7 @@ public class TwitterConsumerRoute extends RouteBuilder {
             .end();
             //.log("Twitter Body - ${body}");
 
+
     /*from("timer://myTimerSearch?period=5s&fixedRate=true")
             .transform(method(TwitterConsumerRoute.class, "rangeOfTerms"))
             //.log("${body}")
