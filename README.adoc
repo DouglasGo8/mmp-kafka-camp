@@ -18,3 +18,12 @@
 I intend to use this Twitter feed to get real data streams into an application that will put data into Kafka, after that this data will end up in a ELK stack at the end and this just a POC purpose, to show how Apache Camel shines over code bloat up until languages such Python.
 This is no Commercial app and will result in any besides product deployment Twitter data will not be displayed, and we will only extract tweets on low, very low terms
 ****
+
+== Acks (Acknowledgement) Modes
+
+. Ack (0) No Response is required, if the broker goes offline or an exception happens, we won't know and will lose data
+. Ack (1) Leader response is requested,but replication is not guarantee (happens in background), if an ack is not received, the producer may retry,
+if the leader goes down/offline and replicas haven't replicated the data yet, we have a data loss
+. Ack (all) Leader + Replicas ack requested, this configuration is necessary if lost data is not an option,
+. In camel Acks property can be represented by requestRequiredAcks just in Producer mode
+
