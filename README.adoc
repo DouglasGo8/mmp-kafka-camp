@@ -4,14 +4,19 @@
 
 - https://docs.confluent.io/platform/current/quickstart/ce-docker-quickstart.html[Quick Start for Confluent Platform]
 - https://camel.apache.org/components/3.15.x/kafka-component.html[Kafka Camel Component]
-- https://camel.apache.org/components/3.15.x/twitter-search-component.html[Twitter Search]
+- https://camel.apache.org/components/3.15.x/twitter-search-component.html[Camel Twitter Search]
+- https://camel.apache.org/components/3.16.x/elasticsearch-rest-component.html[Camel ElasticSearch]
 - https://sematext.com/blog/logback-tutorial/[Logback Configuration]
 - https://developer.twitter.com/[Twitter API Credentials]
 - https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html[Install Elasticsearch with Docker]
 - https://hgmauri.medium.com/configurando-o-elasticsearch-e-kibana-no-docker-3f4679eb5feb[Configurando o Elasticsearch e Kibana no Docker]
 - https://developer.twitter.com/en[Developer Twitter Account]
 - https://twitter.com/logout?redirect_after_logout=[Twitter Developer Login]
+- https://stackoverflow.com/questions/59957542/can%C2%B4t-start-elasticsearch-docker-container[ElasticSearch Access Denied Exception]
+- https://stream.wikimedia.org/v2/stream/recentchange[Recent Change Streams]
+- https://howtodoinjava.com/kafka/spring-boot-jsonserializer-example/[Spring Boot Kafka JsonSerializer Example]
 
+https://xxx[]
 == Twitter texts to be approved on prompt
 
 ****
@@ -24,10 +29,11 @@ This is no Commercial app and will result in any besides product deployment Twit
 . Ack (0) No Response is required, if the broker goes offline or an exception happens, we won't know and will lose data
 . Ack (1) Leader response is requested,but replication is not guarantee (happens in background), if an ack is not received, the producer may retry,
 if the leader goes down/offline and replicas haven't replicated the data yet, we have a data loss
-. Ack (all) Leader + Replicas ack requested, this configuration is necessary if lost data is not an option, in this option we need configure min.insync.replicas to set at the broker or topic level, e.g. min.insync.replicas=2 means that at least 2 brokers that are ISR (including leader) must respond that they have the data
-. In camel Acks property can be represented by requestRequiredAcks just in Producer mode
+. Ack (all) Leader + Replicas ack requested, this configuration is necessary if lost data is not an option, in this option we need configure #_min.insync.replicas_# to set at the broker or topic level, e.g. #_min.insync.replicas=2_# means that at least 2 brokers that are ISR (including leader) must respond that they have the data
+. In camel Acks property can be represented by requestRequired Acks just in Producer mode
 
 == Idempotent Producer
+
 . The producer can introduce duplicated messages in Kafka due to networks failures
 
 == Message Compression
@@ -36,3 +42,80 @@ if the leader goes down/offline and replicas haven't replicated the data yet, we
 
 . The batch size default is 16384 (16KB)
 . Snappy compression type is very helpful if your message are text based, such as log or JSON documents
+
+.Multiple Grouped Consumer in Multiple partitions
+image::architecture/thumb/Kafka_Group_Consumers_and_Multipe_partitions.png[]
+
+
+== ELK Basic Commands
+
+[source, bash]
+----
+GET /_cat/indices?v
+GET /_cat/nodes?v
+GET /_cat/health?v
+
+PUT /twitter
+
+PUT /twitter/tweets/1
+{
+  "text": "bla"
+}
+----
+
+== Wikimedia on Java Implementation
+
+[source,java]
+----
+@Component
+@AllArgsConstructor
+public class WikimediaChangesProducer {
+
+  private final ProducerTemplate template;
+
+  final class MyWikimediaChangeHandler implements EventHandler {
+
+    @Override
+    public void onOpen() {
+      // Not will be implemented
+    }
+
+    @Override
+    public void onClosed() {
+      // Not will be implemented
+    }
+
+    @Override
+    public void onMessage(String s, MessageEvent messageEvent) {
+      //log.info("{}", messageEvent.getData());
+      WikimediaChangesProducer.
+        this.
+        template.asyncSendBody("seda://wikiMediaProducer", messageEvent.getData());
+    }
+
+    @Override
+    public void onComment(String s) {
+      // Not will be implemented
+    }
+
+    @Override
+    public void onError(Throwable throwable) {
+      // Not will be implemented
+    }
+  }
+
+
+  @PostConstruct
+  public void setUp() {
+    var event = new MyWikimediaChangeHandler();
+    var url = "https://stream.wikimedia.org/v2/stream/recentchange";
+    var build = new EventSource.Builder(event, URI.create(url));
+    var eventSource = build.build();
+
+    eventSource.start();
+  }
+
+}
+----
+
+* _wikimedia.recentchange_ kafka topic

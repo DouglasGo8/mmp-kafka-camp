@@ -4,17 +4,20 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
   <groupId>com.udemy.kafka.camp</groupId>
   <artifactId>mmp-kafka-camp</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Udemy :: Kafka Boot Camp</name>
+
   <!-- Properties -->
   <properties>
     <spring.boot-version>2.6.3</spring.boot-version>
     <surefire.plugin.version>3.0.0-M4</surefire.plugin.version>
   </properties>
-  <!-- -->
+
+  <!-- BOM -->
   <dependencyManagement>
     <dependencies>
       <!-- Spring Boot BOM -->
@@ -35,6 +38,9 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
+  <!-- Dependencies -->
+
   <dependencies>
     <!-- Spring Boot -->
     <dependency>
@@ -122,7 +128,8 @@
     </plugins>
   </build>
   <modules>
-    <module>kafka-intro</module>
-    <module>kafka-twitter-integ</module>
+    <module>intro</module>
+    <module>twitter-integration</module>
+    <module>wikimedia-integration</module>
   </modules>
 </project>
