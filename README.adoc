@@ -2,6 +2,7 @@
 
 == Links
 
+- https://docs.confluent.io/platform/current/release-notes/index.html[Confluent Platform 7.1.1 Release Notes]
 - https://docs.confluent.io/platform/current/quickstart/ce-docker-quickstart.html[Quick Start for Confluent Platform]
 - https://camel.apache.org/components/3.15.x/kafka-component.html[Kafka Camel Component]
 - https://camel.apache.org/components/3.15.x/twitter-search-component.html[Camel Twitter Search]
@@ -16,7 +17,6 @@
 - https://stream.wikimedia.org/v2/stream/recentchange[Recent Change Streams]
 - https://howtodoinjava.com/kafka/spring-boot-jsonserializer-example/[Spring Boot Kafka JsonSerializer Example]
 
-https://xxx[]
 == Twitter texts to be approved on prompt
 
 ****
@@ -27,14 +27,19 @@ This is no Commercial app and will result in any besides product deployment Twit
 == Acks (Acknowledgement) Modes
 
 . Ack (0) No Response is required, if the broker goes offline or an exception happens, we won't know and will lose data
-. Ack (1) Leader response is requested,but replication is not guarantee (happens in background), if an ack is not received, the producer may retry,
-if the leader goes down/offline and replicas haven't replicated the data yet, we have a data loss
+. Ack (1) Leader response is requested,but replication is not guarantee (happens in background), if an ack is not received, the producer may retry, if the leader goes down/offline and replicas haven't replicated the data yet, we have a data loss
 . Ack (all) Leader + Replicas ack requested, this configuration is necessary if lost data is not an option, in this option we need configure #_min.insync.replicas_# to set at the broker or topic level, e.g. #_min.insync.replicas=2_# means that at least 2 brokers that are ISR (including leader) must respond that they have the data
 . In camel Acks property can be represented by requestRequired Acks just in Producer mode
 
 == Idempotent Producer
 
 . The producer can introduce duplicated messages in Kafka due to networks failures
+. Idempotent producers are great to guarantee a stable and safe pipeline
+. They are the #_default since Kafka 3.0, recommended to use them_#
+. Since #_Kafka 3.0_#, the producer is "safe" by default
+
+.Kafka Producer defaults
+image::architecture/thumb/Kakfa_Producer_defaults.png[Kafka Producer defaults]
 
 == Message Compression
 
@@ -46,10 +51,9 @@ if the leader goes down/offline and replicas haven't replicated the data yet, we
 .Multiple Grouped Consumer in Multiple partitions
 image::architecture/thumb/Kafka_Group_Consumers_and_Multipe_partitions.png[]
 
-
 == ELK Basic Commands
 
-[source, bash]
+[source,bash]
 ----
 GET /_cat/indices?v
 GET /_cat/nodes?v
@@ -119,3 +123,15 @@ public class WikimediaChangesProducer {
 ----
 
 * _wikimedia.recentchange_ kafka topic
+
+[source,bash]
+----
+docker rmi $(docker images --format '{{.Repository}}:{{.Tag}}'|grep 'confluentinc')
+----
+
+[source,html]
+----
+enableIdempotence (producer)
+
+If set to 'true' the producer will ensure that exactly one copy of each message is written in the stream. If 'false', producer retries may write duplicates of the retried message in the stream. If set to true this option will require max.in.flight.requests.per.connection to be set to 1 and retries cannot be zero and additionally acks must be set to 'all'. it is false by default
+----
