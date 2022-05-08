@@ -16,6 +16,8 @@
 - https://stackoverflow.com/questions/59957542/can%C2%B4t-start-elasticsearch-docker-container[ElasticSearch Access Denied Exception]
 - https://stream.wikimedia.org/v2/stream/recentchange[Recent Change Streams]
 - https://howtodoinjava.com/kafka/spring-boot-jsonserializer-example/[Spring Boot Kafka JsonSerializer Example]
+- https://howtodoinjava.com/kafka/spring-boot-jsonserializer-example/[Spring Boot Kafka JsonSerializer Example]
+- https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-settings-limit.html[Mapping limit settings]
 
 == Twitter texts to be approved on prompt
 
@@ -27,7 +29,7 @@ This is no Commercial app and will result in any besides product deployment Twit
 == Acks (Acknowledgement) Modes
 
 . Ack (0) No Response is required, if the broker goes offline or an exception happens, we won't know and will lose data
-. Ack (1) Leader response is requested,but replication is not guarantee (happens in background), if an ack is not received, the producer may retry, if the leader goes down/offline and replicas haven't replicated the data yet, we have a data loss
+. Ack (1) Leader response is requested, but replication is not guarantee (happens in background), if an ack is not received, the producer may retry, if the leader goes down/offline and replicas haven't replicated the data yet, we have a data loss
 . Ack (all) Leader + Replicas ack requested, this configuration is necessary if lost data is not an option, in this option we need configure #_min.insync.replicas_# to set at the broker or topic level, e.g. #_min.insync.replicas=2_# means that at least 2 brokers that are ISR (including leader) must respond that they have the data
 . In camel Acks property can be represented by requestRequired Acks just in Producer mode
 
@@ -64,6 +66,21 @@ PUT /twitter
 PUT /twitter/tweets/1
 {
   "text": "bla"
+}
+
+GET /wikimedia/_doc/9S1ZoYABzIzbrNtH76wF
+----
+
+.GET /wikimedia/_doc/9S1ZoYABzIzbrNtH76wF
+image::architecture/thumb/OpenSearch_Dashboard_GET_ById.png[GET /wikimedia/_doc/9S1ZoYABzIzbrNtH76wF]
+
+== Configuration Mapping limit setting
+
+[source,bash]
+----
+PUT wikimedia/_settings
+{
+  "index.mapping.depth.limit": 2000
 }
 ----
 

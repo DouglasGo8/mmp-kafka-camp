@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
  * @author dougdb
  */
 @Component
-public class MySpringBootRouter extends RouteBuilder {
+public class MyProducerRouter extends RouteBuilder {
 
   @Override
   public void configure() {
