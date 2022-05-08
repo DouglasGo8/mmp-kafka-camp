@@ -3,7 +3,6 @@ package com.udemy.intro.mediation.producer;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.component.kafka.KafkaConstants;
 import org.springframework.stereotype.Component;
 
 /**
