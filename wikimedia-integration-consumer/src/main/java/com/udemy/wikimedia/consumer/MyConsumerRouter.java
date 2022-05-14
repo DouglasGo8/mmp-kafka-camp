@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.builder.RouteBuilder;
+import org.opensearch.action.bulk.BulkRequest;
 import org.opensearch.action.index.IndexRequest;
 import org.opensearch.client.RequestOptions;
 import org.opensearch.client.RestHighLevelClient;
@@ -54,9 +55,29 @@ public class MyConsumerRouter extends RouteBuilder {
               //var json = new ObjectMapper().readTree(body);
               //log.info("{}", json.get("payload").get("comment"));
               //try {
-              var indexRequest = new IndexRequest(indexName).source(body, XContentType.JSON);
-              var indexResponse = restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
-              log.info("{}", indexResponse.getId());
+
+              // def and exclusive ID to avoid duplicated Ids on ELK
+              /*var id = e.getIn().getHeader("kafka.TOPIC", String.class) +
+                      e.getIn().getHeader("kafka.PARTITION", String.class) +
+                      e.getIn().getHeader("kafka.OFFSET", String.class);*/
+
+              // get the id from payload body, this is a better approach
+              // var id = new ObjectMapper().readTree(body).get("meta").get("id").asText();
+
+              var bulkRequest = new BulkRequest();
+
+              var indexRequest = new IndexRequest(indexName).source(body, XContentType.JSON)/*.id(id)*/;
+
+              // Not recommended
+              //var indexResponse = restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
+
+              bulkRequest.add(indexRequest);
+
+              if (bulkRequest.numberOfActions() > 0) {
+                var bulkResp = restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
+                log.info("{} record(s)", bulkResp.getItems().length);
+              }
+              //log.info("{}", indexResponse.getId());
               // }catch (Exception ex) {
               //  ex.printStackTrace();
               //}

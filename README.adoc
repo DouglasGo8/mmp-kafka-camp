@@ -110,8 +110,7 @@ public class WikimediaChangesProducer {
     public void onMessage(String s, MessageEvent messageEvent) {
       //log.info("{}", messageEvent.getData());
       WikimediaChangesProducer.
-        this.
-        template.asyncSendBody("seda://wikiMediaProducer", messageEvent.getData());
+        this.template.asyncSendBody("seda://wikiMediaProducer", messageEvent.getData());
     }
 
     @Override
@@ -152,3 +151,17 @@ enableIdempotence (producer)
 
 If set to 'true' the producer will ensure that exactly one copy of each message is written in the stream. If 'false', producer retries may write duplicates of the retried message in the stream. If set to true this option will require max.in.flight.requests.per.connection to be set to 1 and retries cannot be zero and additionally acks must be set to 'all'. it is false by default
 ----
+
+
+== Kafka Connectors Overview
+
+.Kafka Connectors Overview
+image::architecture/thumb/Kafka_Connectors.png[]
+
+
+== Kafka Stream Quick Intro
+. Easy data processing (stats) and transformation lib within kafka, down bellow a quick summary
+
+.Kafka Streams quick Summary
+image::architecture/thumb/Kafka_Streams.png[]
+
