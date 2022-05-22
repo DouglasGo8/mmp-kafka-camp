@@ -10,7 +10,7 @@
 - https://sematext.com/blog/logback-tutorial/[Logback Configuration]
 - https://developer.twitter.com/[Twitter API Credentials]
 - https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html[Install Elasticsearch with Docker]
-- https://hgmauri.medium.com/configurando-o-elasticsearch-e-kibana-no-docker-3f4679eb5feb[Configurando o Elasticsearch e Kibana no Docker]
+- https://hgmauri.medium.com/configurando-o-elasticsearch-e-kibana-no-docker-3f4679eb5feb[Configuration o Elasticsearch e Kibana no Docker]
 - https://developer.twitter.com/en[Developer Twitter Account]
 - https://twitter.com/logout?redirect_after_logout=[Twitter Developer Login]
 - https://stackoverflow.com/questions/59957542/can%C2%B4t-start-elasticsearch-docker-container[ElasticSearch Access Denied Exception]
@@ -18,6 +18,7 @@
 - https://howtodoinjava.com/kafka/spring-boot-jsonserializer-example/[Spring Boot Kafka JsonSerializer Example]
 - https://howtodoinjava.com/kafka/spring-boot-jsonserializer-example/[Spring Boot Kafka JsonSerializer Example]
 - https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-settings-limit.html[Mapping limit settings]
+- https://cnr.sh/essays/how-paint-bike-shed-kafka-topic-naming-conventions[Kafka Topic Naming Conventions]
 
 == Twitter texts to be approved on prompt
 
@@ -152,16 +153,28 @@ enableIdempotence (producer)
 If set to 'true' the producer will ensure that exactly one copy of each message is written in the stream. If 'false', producer retries may write duplicates of the retried message in the stream. If set to true this option will require max.in.flight.requests.per.connection to be set to 1 and retries cannot be zero and additionally acks must be set to 'all'. it is false by default
 ----
 
-
 == Kafka Connectors Overview
 
 .Kafka Connectors Overview
 image::architecture/thumb/Kafka_Connectors.png[]
 
-
 == Kafka Stream Quick Intro
+
 . Easy data processing (stats) and transformation lib within kafka, down bellow a quick summary
 
 .Kafka Streams quick Summary
 image::architecture/thumb/Kafka_Streams.png[]
+
+=== Tips Kafka
+
+. The _two most important_ parameter when a topic is configured are (Partitions Count & Replication Factor), because they impact performance and durability of the system overall
+
+.Replication Factor Guidelines
+image::architecture/thumb/GuidLine_replicationfactor.png[]
+
+
+.Social Media Solution using CQRS
+image::architecture/thumb/CQRS_Kafka_MediaSocial.png[]
+
+
 
