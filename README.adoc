@@ -17,6 +17,7 @@
 - https://stream.wikimedia.org/v2/stream/recentchange[Recent Change Streams]
 - https://howtodoinjava.com/kafka/spring-boot-jsonserializer-example/[Spring Boot Kafka JsonSerializer Example]
 - https://howtodoinjava.com/kafka/spring-boot-jsonserializer-example/[Spring Boot Kafka JsonSerializer Example]
+- https://howtodoinjava.com/kafka/spring-boot-jsonserializer-example/[Spring Boot Kafka JsonSerializer Example]
 - https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-settings-limit.html[Mapping limit settings]
 - https://cnr.sh/essays/how-paint-bike-shed-kafka-topic-naming-conventions[Kafka Topic Naming Conventions]
 
@@ -143,7 +144,7 @@ public class WikimediaChangesProducer {
 
 [source,bash]
 ----
-docker rmi $(docker images --format '{{.Repository}}:{{.Tag}}'|grep 'confluentinc')
+    docker rmi $(docker images --format '{{.Repository}}:{{.Tag}}'|grep 'confluentinc')
 ----
 
 [source,html]
